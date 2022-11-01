@@ -1,0 +1,10 @@
+#Filter	Lamba_eff	File
+g	4672		g
+r	6141		r
+i	7458		i
+J	12350		J
+H	16620		H
+K	21590		K
+G	5851		GaiaG
+GBP	5042		GaiaGBP
+GRP	7691		GaiaGRP
