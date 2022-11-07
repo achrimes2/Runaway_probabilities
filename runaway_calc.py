@@ -32,7 +32,12 @@ def calculate_probability(distance,Av,band,maglim,pmlim):
     
     #Selecting the model weightings.
     #Each runaway model has photometry and a weighting, and appears N times, 
-    weights = np.loadtxt(root+'bin_'+metals+'_weight_frac_unbound.txt')   #each appearance represents a different random NS kick.
+    if band != 'F277W' and band != 'F444W':
+        weights = np.loadtxt(root+'bin_'+metals+'_weight_frac_unbound.txt')   #each appearance represents a different random NS kick.
+        TOT2D = np.loadtxt(root+'total2dvelprojected.txt')     #transverse velocities in km/s
+    else:
+        weights = np.loadtxt(root+'bin_'+metals+'_Wjwst_unbound.txt')  
+        TOT2D = np.loadtxt(root+'bin_z020_Vjwst_unbound.txt')     #transverse velocities in km/s
     
     magnitudes = np.loadtxt(root+'bin_'+metals+'_'+filename+'_unbound.txt') #the absolute magnitudes.
     cond1 = (magnitudes < 30) #removes any spurious entries.
@@ -47,7 +52,6 @@ def calculate_probability(distance,Av,band,maglim,pmlim):
     vel_m_per_year = radians_per_year * dpc   #rad/yr -> metres per year
     kms = (vel_m_per_year/1000)/(365*24*3600)       #m/yr -> km/s
 
-    TOT2D = np.loadtxt(root+'total2dvelprojected.txt')     #transverse velocities in km/s
     condfrac = (TOT2D[cond1] > kms) & cond2       #PM & mag limits applied: fast enough & bright enough to see & detect motion
     probability = 0.45*np.sum(weights[cond1][condfrac])/np.sum(weights[cond1])  #Probability of detection and motion measurement
     #A factor 0.45 is include because only 45% of all CCSNe predicted to arise from primaries.

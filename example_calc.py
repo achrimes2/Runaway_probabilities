@@ -17,10 +17,10 @@ Av = 5.4
 # The filter in question.
 # Enter 'g','r','i','J','H','K' for standard filters in AB mags. 
 # Can also use Gaia filters; 'G', 'GBP', 'GRP' - these are in Vega mags.
-band = 'K'  
+band = 'F277W'  
 
 # Enter the limiting magnitude above which detections can be confidently made,
-maglim = 20
+maglim = 26
 
 # Enter the minimum measurable proper motion,
 pmlim = 1

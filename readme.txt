@@ -5,14 +5,14 @@ An example is shown in example_calc.py, which used the function 'calculate_proba
 Inputs:
 Distance [pc]
 Av
-Filter (g,r,i,J,H,K,G,GBP or GRP)
+Filter (g,r,i,J,H,K,G,GBP, GRP, F277W or F444W)
 maglim 
 pmlim [mas/yr]
 
-Where maglim is the limiting magnitude and pmlim is the minimum measurable proper motion.
+Where 'maglim' is the limiting magnitude and 'pmlim' is the minimum measurable proper motion.
 
 N.b. Gaia magnitudes are in the Vega system, others are in AB.
 
-For sub-divisions by SN type, other filters, other kick distributions or other metallicities (here we assume Z=0.020), get in touch!
+For sub-divisions by SN type, or other filters, kick distributions or metallicities (here we assume Z=0.020), feel free to get in touch - a.chrimes@astro.ru.nl.
 
 
