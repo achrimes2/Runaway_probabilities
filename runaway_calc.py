@@ -44,7 +44,7 @@ def calculate_probability(choice,distance,Av,band,maglim,mu_min,years):
     cond2 = (mags < maglim)                               #Limititng magnitude applied. Which mags are detectable?
     can_see = mags[cond2]
     
-    if choice == 'Gaia DR3': #implementing mag-dependent mu_min for Gaia
+    if choice == 'Gaia': #implementing mag-dependent mu_min for Gaia
         Tfactor = 1 
         z = np.max([10**(0.4*(13-15)), 10**(0.4*(np.median(can_see)-15))]) 
         sig_omega_bar = Tfactor * np.sqrt(40 + 800*z + 30*(z**2))
@@ -88,4 +88,4 @@ def calculate_probability(choice,distance,Av,band,maglim,mu_min,years):
     #A factor of 0.45 is include because only 45% of all CCSNe predicted to arise from primaries.
     #The rest are from single stars, merged binaries, ejected secondaries or secondaries with a compact remnant, no ejected companion.
 
-    return np.round(probability,2)
+    return np.round(probability,3)
