@@ -3,13 +3,15 @@ Code to calculate the probability of detecting a runaway, as described in Chrime
 An example is shown in example_calc.py, which used the function 'calculate_probability' in runaway_calc.py.
 
 Inputs:
+Choice (enter either 'Gaia DR3', 'HST', 'JWST' or 'NGRST')
 Distance [pc]
 Av
 Filter (g,r,i,J,H,K,G,GBP, GRP, F277W or F444W)
 maglim 
-pmlim [mas/yr]
+mu_min [mas/yr]
 
-Where 'maglim' is the limiting magnitude and 'pmlim' is the minimum measurable proper motion.
+Where 'maglim' is the limiting magnitude and 'mu_min' is the minimum measurable proper motion. mu_min will be overriden by a magnitide dependent model if
+anything other than choice='NGRST'. The 'years' parameter is included in the model if choice='HST' or 'JWST'.
 
 N.b. Gaia magnitudes are in the Vega system, others are in AB.
 
