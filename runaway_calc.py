@@ -77,6 +77,9 @@ def calculate_probability(choice,distance,Av,band,maglim,mu_min,years):
         sig_tot = np.sqrt(sig_pos**2 + sig_abs**2)
         theta_min = np.sqrt( 2*(sig_tot)**2 )/years
         mu_min = theta_min*1000/years  #into mas/yr for 1 sigma uncertainty on mu
+    
+    elif choice == 'NGRST':
+        mu_min = 0.01 #mas/yr
         
     dpc = distance*(3.0857*10**16)                          #distance pc -> m
     radians_per_year = 2*np.pi*(((mu_min/1000)/3600)/360)      #min PM from mas -> rad/yr
