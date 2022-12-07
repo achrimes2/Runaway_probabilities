@@ -12,26 +12,39 @@ import numpy as np
 choice = input("Enter one of 'Gaia', 'HST', 'JWST', 'NGRST' or 'custom': ")
 
 #Distance in kpc
-distance = np.float(input("Enter a distance in kpc: "))*1000
+distance = np.float(input("Enter the distance in kpc: "))*1000
 
 #Extinction in Av 
-Av = np.float(input(r"Enter a visual extinction Av: "))
+Av = np.float(input(r"Enter the visual extinction Av: "))
 
 # Choose your filter. Options available are,
 # 'g','r','i','J','H','K' for standard filters in AB mags. 
 # Can also choose 'F277W' or 'F444W' for JWST/NIRcam (AB), or...
 # Gaia filters; 'G', 'GBP', 'GRP' - these are in Vega mags.
-print("Choose a filter. Options are 'g', 'r', 'i', 'J', 'H', 'K' (all AB mags), 'F277W', 'F444W' for JWST (also AB) and for 'G' for Gaia (Vega mags).")
-band = input("Enter filter choice: ")
+if choice == 'Gaia':
+    print("Choose a filter. Options are 'G', 'GBP' or 'GRP' (Vega mags).")
+    band = input("Enter filter choice: ")
+elif choice == 'HST':
+    print("Choose a filter. Options are (approximating HST filters) 'g', 'r', 'i', 'J' and 'H'.")
+    band = input("Enter filter choice: ")
+elif choice == 'JWST':
+    print("Choose a filter. Options are 'F277W' and 'F444W'.")
+    band = input("Enter filter choice: ")
+elif choice == 'NGRST':
+    print("Choose a filter. Options are 'J', 'H' and 'K'.")
+    band = input("Enter filter choice: ")
+elif choice == 'custom':
+    print("Choose a filter. Options are 'g', 'r', 'i', 'J', 'H', 'K' (all AB mags), 'F277W', 'F444W' for JWST (also AB) and for 'G' for Gaia (Vega mags).")
+    band = input("Enter filter choice: ")
 
 # Enter the limiting magnitude above which detections can be confidently made,
-maglim = np.float(input(r"Enter a (3 sigma) limiting magnitude: "))
+maglim = np.float(input(r"Enter the (3 sigma) limiting magnitude: "))
 
 # Enter the minimum measurable proper motion. This will be overridden for Gaia DR3, HST and JWST in favour of a
 # magnitude-dependent model, so you can enter anything.
 # For NGRST, whatever you enter here will be used. Nominally 0.01mas/yr is achievable for NGRST.
 if choice == 'custom':
-    mu_min = np.float(input(r"Enter a minimum measurable proper motion in masy/yr: "))
+    mu_min = np.float(input(r"Enter the minimum measurable proper motion in masy/yr: "))
     #only used if 'custom' is chosen, otherwise mu_min(mag) is used, or 0.01mas/yr assumed for NGRST.
 else:
     mu_min = -999 #not used for Gaia, HST, JWST, NGRST
@@ -42,7 +55,6 @@ if choice == 'Gaia' or choice =='NGRST' or choice == 'custom':
     years = -999 #not used, either because it is assumed already (gaia, ngrst) or taken into account in the mu_min provided.
 elif choice == 'HST' or choice == 'JWST':
     years = np.float(input("Enter the number of years between images: "))
-    
 
 
 prob = calculate_probability(choice,distance,Av,band,maglim,mu_min,years)
