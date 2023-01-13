@@ -60,7 +60,7 @@ def calculate_probability(choice,distance,Av,band,maglim,mu_min,years):
         pixel = 0.065 #typical for a 3-dither drizzled WFC3/IR image, asec/pixel
         if sig_pos < 0.03*pixel: #limited by fact image is pixelated
             sig_pos = 0.03*pixel
-        sig_abs = 0 #or ~5mas if Gaia absolute astrometry is relevant
+        sig_abs = 0.5/1000 
         sig_tot = np.sqrt(sig_pos**2 + sig_abs**2)
         theta_min = np.sqrt( 2*(sig_tot)**2 )/years
         mu_min = theta_min*1000/years  #into mas/yr for 1 sigma uncertainty on mu
@@ -73,7 +73,7 @@ def calculate_probability(choice,distance,Av,band,maglim,mu_min,years):
         pixel = 0.063 #native NIRcam pixel scale in 2.4mu-5.0mu range, asec/pixel
         if sig_pos < 0.03*pixel: #limited by fact image is pixelated
             sig_pos = 0.03*pixel
-        sig_abs = 0 #or ~5mas if Gaia absolute astrometry is relevant
+        sig_abs = 0.5/1000 
         sig_tot = np.sqrt(sig_pos**2 + sig_abs**2)
         theta_min = np.sqrt( 2*(sig_tot)**2 )/years
         mu_min = theta_min*1000/years  #into mas/yr for 1 sigma uncertainty on mu
