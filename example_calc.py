@@ -9,7 +9,7 @@ from runaway_calc import calculate_probability
 import numpy as np
 
 #Observatory of choice
-choice = input("Enter one of 'Gaia', 'HST', 'JWST', 'NGRST' or 'custom': ")
+choice = input("Enter one of 'Gaia', 'HST', 'JWST', 'Euclid', 'NGRST' or 'custom': ")
 
 #Distance in kpc
 distance = np.float(input("Enter the distance in kpc: "))*1000
@@ -30,6 +30,9 @@ elif choice == 'HST':
 elif choice == 'JWST':
     print("Choose a filter. Options are 'F277W' and 'F444W'.")
     band = input("Enter filter choice: ")
+elif choice == 'Euclid':
+    print("Choose a filter. Options are 'J' or 'H'.")
+    band = input("Enter filter choice: ")
 elif choice == 'NGRST':
     print("Choose a filter. Options are 'J', 'H' and 'K'.")
     band = input("Enter filter choice: ")
@@ -39,6 +42,12 @@ elif choice == 'custom':
 
 # Enter the limiting magnitude above which detections can be confidently made,
 maglim = np.float(input(r"Enter the (3 sigma) limiting magnitude: "))
+
+if choice == 'Euclid' or choice == 'NGRST':
+    # Enter the total number of exposure per epoch.
+    Nexp = np.float(input(r"Enter the number of exposure per epoch: "))
+else:
+    Nexp = 1
 
 # Enter the minimum measurable proper motion. This will be overridden for Gaia DR3, HST and JWST in favour of a
 # magnitude-dependent model, so you can enter anything.
@@ -51,12 +60,12 @@ else:
 
 #This is the temporal baseline between two images.
 #For Gaia and NGRST, this parameter won't be used. For HST, JWST and NGRST, it will.
-if choice == 'Gaia' or choice =='NGRST' or choice == 'custom':
-    years = -999 #not used, either because it is assumed already (gaia, ngrst) or taken into account in the mu_min provided.
-elif choice == 'HST' or choice == 'JWST':
+if choice == 'Gaia' or choice == 'custom':
+    years = -999 #not used, either because it is assumed already (gaia) or taken into account in the mu_min provided.
+else:
     years = np.float(input("Enter the number of years between images: "))
 
 
-prob = calculate_probability(choice,distance,Av,band,maglim,mu_min,years)
+prob = calculate_probability(choice,distance,Av,band,maglim,mu_min,years,Nexp)
 
 print('Probability of detecting and measuring the motion of an ejected companion associated with this remnant is ',prob)

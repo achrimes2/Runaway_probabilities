@@ -13,7 +13,7 @@
 import numpy as np
 import extinction
 
-def calculate_probability(choice,distance,Av,band,maglim,mu_min,years):
+def calculate_probability(choice,distance,Av,band,maglim,mu_min,years,Nexp):
 
     filterinfo = np.loadtxt('filters.txt',dtype='str')    #Load in filter details.
     
@@ -79,7 +79,30 @@ def calculate_probability(choice,distance,Av,band,maglim,mu_min,years):
         mu_min = theta_min*1000/years  #into mas/yr for 1 sigma uncertainty on mu
     
     elif choice == 'NGRST':
-        mu_min = 0.01 #mas/yr
+        FWHM = 0.11 #asec
+        sigma = (1/3)*10**(-(maglim)/2.5) #assuming 3 sigma limiting mag
+        SNR = (1/sigma) * 10**(-(np.median(can_see))/2.5)
+        sig_pos = FWHM/(2.35*SNR)
+        pixel = 0.11 #
+        if sig_pos < 0.03*pixel: #limited by fact image is pixelated
+            sig_pos = 0.03*pixel
+        sig_abs = 0.5/1000 
+        sig_tot = np.sqrt(sig_pos**2 + sig_abs**2)
+        theta_min = np.sqrt( 2*(sig_tot)**2 )/years
+        mu_min = (theta_min*1000/years)/np.sqrt(Nexp)  #into mas/yr for 1 sigma uncertainty on mu
+        
+    elif choice == 'Euclid':
+        FWHM = 0.3 #asec
+        sigma = (1/3)*10**(-(maglim)/2.5) #assuming 3 sigma limiting mag
+        SNR = (1/sigma) * 10**(-(np.median(can_see))/2.5)
+        sig_pos = FWHM/(2.35*SNR)
+        pixel = 0.3 #
+        if sig_pos < 0.03*pixel: #limited by fact image is pixelated
+            sig_pos = 0.03*pixel
+        sig_abs = 0.5/1000 
+        sig_tot = np.sqrt(sig_pos**2 + sig_abs**2)
+        theta_min = np.sqrt( 2*(sig_tot)**2 )/years
+        mu_min = (theta_min*1000/years)/np.sqrt(Nexp)  #into mas/yr for 1 sigma uncertainty on mu
         
     dpc = distance*(3.0857*10**16)                          #distance pc -> m
     radians_per_year = 2*np.pi*(((mu_min/1000)/3600)/360)      #min PM from mas -> rad/yr
