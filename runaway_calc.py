@@ -60,9 +60,10 @@ def calculate_probability(choice,distance,Av,band,maglim,mu_min,years,Nexp):
         pixel = 0.065 #typical for a 3-dither drizzled WFC3/IR image, asec/pixel
         if sig_pos < 0.03*pixel: #limited by fact image is pixelated
             sig_pos = 0.03*pixel
-        sig_abs = 0.5/1000 
+        sig_pos = sig_pos/np.sqrt(Nexp)
+        sig_abs = (0.5/1000)/np.sqrt(Nexp) # in arcsec.
         sig_tot = np.sqrt(sig_pos**2 + sig_abs**2)
-        theta_min = np.sqrt( 2*(sig_tot)**2 )/years
+        theta_min = np.sqrt( 2*(sig_tot)**2 )
         mu_min = theta_min*1000/years  #into mas/yr for 1 sigma uncertainty on mu
     
     elif choice == 'JWST':
@@ -73,9 +74,10 @@ def calculate_probability(choice,distance,Av,band,maglim,mu_min,years,Nexp):
         pixel = 0.063 #native NIRcam pixel scale in 2.4mu-5.0mu range, asec/pixel
         if sig_pos < 0.03*pixel: #limited by fact image is pixelated
             sig_pos = 0.03*pixel
-        sig_abs = 0.5/1000 
+        sig_pos = sig_pos/np.sqrt(Nexp)
+        sig_abs = (0.5/1000)/np.sqrt(Nexp) # in arcsec.
         sig_tot = np.sqrt(sig_pos**2 + sig_abs**2)
-        theta_min = np.sqrt( 2*(sig_tot)**2 )/years
+        theta_min = np.sqrt( 2*(sig_tot)**2 )
         mu_min = theta_min*1000/years  #into mas/yr for 1 sigma uncertainty on mu
     
     elif choice == 'NGRST':
@@ -86,10 +88,11 @@ def calculate_probability(choice,distance,Av,band,maglim,mu_min,years,Nexp):
         pixel = 0.11 #
         if sig_pos < 0.03*pixel: #limited by fact image is pixelated
             sig_pos = 0.03*pixel
-        sig_abs = 0.5/1000 
+        sig_pos = sig_pos/np.sqrt(Nexp)
+        sig_abs = (0.5/1000)/np.sqrt(Nexp) # in arcsec.
         sig_tot = np.sqrt(sig_pos**2 + sig_abs**2)
-        theta_min = np.sqrt( 2*(sig_tot)**2 )/years
-        mu_min = (theta_min*1000/years)/np.sqrt(Nexp)  #into mas/yr for 1 sigma uncertainty on mu
+        theta_min = np.sqrt( 2*(sig_tot)**2 )
+        mu_min = theta_min*1000/years  #into mas/yr for 1 sigma uncertainty on mu
         
     elif choice == 'Euclid':
         FWHM = 0.3 #asec
@@ -99,10 +102,11 @@ def calculate_probability(choice,distance,Av,band,maglim,mu_min,years,Nexp):
         pixel = 0.3 #
         if sig_pos < 0.03*pixel: #limited by fact image is pixelated
             sig_pos = 0.03*pixel
-        sig_abs = 0.5/1000 
+        sig_pos = sig_pos/np.sqrt(Nexp)
+        sig_abs = (0.5/1000)/np.sqrt(Nexp) # in arcsec.
         sig_tot = np.sqrt(sig_pos**2 + sig_abs**2)
-        theta_min = np.sqrt( 2*(sig_tot)**2 )/years
-        mu_min = (theta_min*1000/years)/np.sqrt(Nexp)  #into mas/yr for 1 sigma uncertainty on mu
+        theta_min = np.sqrt( 2*(sig_tot)**2 )
+        mu_min = theta_min*1000/years #into mas/yr for 1 sigma uncertainty on mu
         
     dpc = distance*(3.0857*10**16)                          #distance pc -> m
     radians_per_year = 2*np.pi*(((mu_min/1000)/3600)/360)      #min PM from mas -> rad/yr

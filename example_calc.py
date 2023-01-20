@@ -47,7 +47,7 @@ if choice == 'Euclid' or choice == 'NGRST':
     # Enter the total number of exposure per epoch.
     Nexp = np.float(input(r"Enter the number of exposure per epoch: "))
 else:
-    Nexp = 1
+    Nexp = 3
 
 # Enter the minimum measurable proper motion. This will be overridden for Gaia DR3, HST and JWST in favour of a
 # magnitude-dependent model, so you can enter anything.
